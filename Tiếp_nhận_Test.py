@@ -155,6 +155,59 @@ class TestAppiumSetup(unittest.TestCase):
             # Kiểm tra xem tuổi của bệnh nhân có dưới 6 không
             if age < 6:
                 print("Tuổi của bệnh nhân bé hơn 6 tuổi. Cần có người thân.")
+                patient_relative_field = self.appium_setup.find_element_by_accessibility_id("cboRelativeType")
+                patient_relative_field.click()
+                if patient_relative == "Cha":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 1")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Mẹ":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 2")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Anh em ruột":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 3")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Con":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 4")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Người bảo hộ":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 5")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Vợ-Chồng":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 6")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Người đưa đến":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 7")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Ông-Bà":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 8")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Cháu":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 9")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Cô":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 10")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Anh":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 11")
+                    chooser_patient_relative.click()
+                elif patient_relative == "Em":
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 12")
+                    chooser_patient_relative.click()
+                else:
+                    chooser_patient_relative = self.appium_setup.find_element_by_name("Row 13")
+                    chooser_patient_relative.click()
+
+                patient_relativeName_field = self.appium_setup.find_element_by_accessibility_id("txtRelativeName")
+                patient_relativeName_field.click()
+                patient_relativeName_field.send_keys(patient_relativeName)
+
+                patient_relativePhone_field = self.appium_setup.find_element_by_accessibility_id("txtRelativePhone")
+                patient_relativePhone_field.click()
+                patient_relativePhone_field.send_keys("0" + str(patient_relativePhone))
+
+                patient_relativeAddress_field = self.appium_setup.find_element_by_accessibility_id("txtRelativeAddress")
+                patient_relativeAddress_field.click()
+                patient_relativeAddress_field.send_keys(patient_relativeAddress)
 
             else:
                 print("Tuổi của bệnh nhân lớn hơn hoặc bằng 6 tuổi. Không cần có người thân.")
@@ -307,6 +360,12 @@ class TestAppiumSetup(unittest.TestCase):
             self.assertIsNotNone(chooser_search_clinic, "Không tìm thấy phần tử bằng name")
             chooser_search_clinic.click()
 
+            if age < 6:
+                dialog = self.appium_setup.find_element_by_name("Thông báo")
+                dialog.click()
+                button_yes = self.appium_setup.find_element_by_accessibility_id("6")
+                button_yes.click()
+
             #Nhập dịch vụ khám
             patient_service_field = self.appium_setup.find_element_by_accessibility_id("cboMedService")
             patient_service_field.click()
@@ -322,6 +381,12 @@ class TestAppiumSetup(unittest.TestCase):
             confirm_button = self.appium_setup.find_element_by_accessibility_id("btnSave")
             confirm_button.click()
             time.sleep(5)
+
+            if age < 6:
+                dialog = self.appium_setup.find_element_by_name("Thông báo")
+                dialog.click()
+                button_yes = self.appium_setup.find_element_by_accessibility_id("6")
+                button_yes.click()
 
             if patient_benefit == "BHYT":
                 # Nhấn phím "Esc" trên bàn phím
