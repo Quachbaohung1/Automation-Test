@@ -15,6 +15,14 @@ class TestAppiumSetup(unittest.TestCase):
     def tearDownClass(cls):
         cls.appium_setup.quit_appium_session()
 
+    def calculate_age(self, patient_bod):
+        # Chuyển đổi ngày tháng năm sinh từ định dạng chuỗi sang đối tượng datetime
+        patient_bod_datetime = pd.to_datetime(patient_bod, format='%Y-%m-%d')
+        today = datetime.datetime.today()
+        age = today.year - patient_bod_datetime.year - (
+                (today.month, today.day) < (patient_bod_datetime.month, patient_bod_datetime.day))
+        return age
+
     def test_login(self):
         # Tiếp tục làm việc với ứng dụng của bạn bằng cách sử dụng các lớp cửa sổ/phương thức tương ứng
         element = self.appium_setup.find_element_by_accessibility_id("FrmMain")
@@ -144,13 +152,8 @@ class TestAppiumSetup(unittest.TestCase):
             formatted_bod = pd.to_datetime(patient_bod).strftime('%d%m%Y')
             patient_bod_field.send_keys(formatted_bod)
 
-            # Lấy thông tin ngày tháng năm sinh từ tệp Excel
-            patient_bod_excel = df['patient_bod'][0]  # Giả sử cột chứa ngày tháng năm sinh có tên là 'Ngày sinh'
-            # Chuyển đổi ngày tháng năm sinh từ định dạng chuỗi sang đối tượng datetime
-            patient_bod_datetime = pd.to_datetime(patient_bod_excel)
             # Tính toán tuổi của bệnh nhân
-            today = datetime.datetime.today()
-            age = today.year - patient_bod_datetime.year - ((today.month, today.day) < (patient_bod_datetime.month, patient_bod_datetime.day))
+            age = TestAppiumSetup.calculate_age(self, patient_bod)
             # Kiểm tra xem tuổi của bệnh nhân có dưới 6 không
             if age < 6:
                 print("Tuổi của bệnh nhân bé hơn 6 tuổi. Cần có người thân.")
@@ -211,7 +214,6 @@ class TestAppiumSetup(unittest.TestCase):
                 patient_relativeAddress_field = self.appium_setup.find_element_by_accessibility_id("txtRelativeAddress")
                 patient_relativeAddress_field.click()
                 patient_relativeAddress_field.send_keys(patient_relativeAddress)
-
             else:
                 print("Tuổi của bệnh nhân lớn hơn hoặc bằng 6 tuổi. Không cần có người thân.")
 
@@ -361,11 +363,12 @@ class TestAppiumSetup(unittest.TestCase):
             self.assertIsNotNone(chooser_search_clinic, "Không tìm thấy phần tử bằng name")
             chooser_search_clinic.click()
 
-            if age < 6 and (patient_clinic == "PK Tai Mũi Họng 1" or patient_clinic == "PK Tai Mũi Họng 2" or patient_clinic == "PK Răng Hàm Mặt"):
+            if age < 6:
                 dialog = self.appium_setup.find_element_by_name("Thông báo")
                 dialog.click()
                 button_yes = self.appium_setup.find_element_by_accessibility_id("6")
                 button_yes.click()
+                time.sleep(10)
 
             #Nhập dịch vụ khám
             patient_service_field = self.appium_setup.find_element_by_accessibility_id("cboMedService")
@@ -383,11 +386,12 @@ class TestAppiumSetup(unittest.TestCase):
             confirm_button.click()
             time.sleep(5)
 
-            if age < 6 and (patient_clinic == "PK Tai Mũi Họng 1" or patient_clinic == "PK Tai Mũi Họng 2" or patient_clinic == "PK Răng Hàm Mặt"):
+            if age < 6:
                 dialog = self.appium_setup.find_element_by_name("Thông báo")
                 dialog.click()
                 button_yes = self.appium_setup.find_element_by_accessibility_id("6")
                 button_yes.click()
+                time.sleep(10)
 
             if patient_benefit == "BHYT":
                 # Nhấn phím "Esc" trên bàn phím
@@ -415,6 +419,7 @@ class TestAppiumSetup(unittest.TestCase):
         # Lặp qua từng hàng trong DataFrame và nhập dữ liệu vào trường văn bản trên giao diện người dùng
         for index, row in df.iterrows():
             patient_code = row['patient_code']
+            patient_bod = row['patient_bod']
             patient_email = row['patient_email']
             patient_phone = row['patient_phone']
             patient_blood = row['patient_blood']
@@ -429,7 +434,7 @@ class TestAppiumSetup(unittest.TestCase):
             #Nhập mã bệnh nhân cũ
             patient_name_field = self.appium_setup.find_element_by_accessibility_id("txtFullName")
             patient_name_field.click()
-            patient_name_field.send_keys("24009696")
+            patient_name_field.send_keys(patient_code)
 
             pyautogui.press('enter')
             time.sleep(10)
@@ -439,6 +444,14 @@ class TestAppiumSetup(unittest.TestCase):
             button_yes = self.appium_setup.find_element_by_accessibility_id("6")
             button_yes.click()
             time.sleep(5)
+
+            age = TestAppiumSetup.calculate_age(self, patient_bod)
+            if age < 6:
+                dialog = self.appium_setup.find_element_by_name("Thông báo")
+                dialog.click()
+                button_yes = self.appium_setup.find_element_by_accessibility_id("6")
+                button_yes.click()
+                time.sleep(5)
 
             #Click btn "Mã bệnh nhân"
             button_patient_code = self.appium_setup.find_element_by_accessibility_id("btnPatientCode")
@@ -452,6 +465,7 @@ class TestAppiumSetup(unittest.TestCase):
                 if window_handle != original_window_handle:
                     # Chuyển đến cửa sổ mới
                     self.appium_setup.get_driver().switch_to.window(window_handle)
+                    time.sleep(3)
                     break
             # Thực hiện các thao tác trên cửa sổ mới
             #Nhập email
