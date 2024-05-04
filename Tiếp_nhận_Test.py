@@ -23,7 +23,7 @@ class TestAppiumSetup(unittest.TestCase):
 
         # Nhập Tài khoản
         account_field = self.appium_setup.find_element_by_accessibility_id("txtAccName")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(account_field, "Không tìm thấy phần tử bằng accessibility_id")
         account_field.click()  # Click vào trường "Tài khoản" để đảm bảo trường đóng được chọn
         # Xóa nội dung trường "Tài khoản" trước khi nhập liệu mới
         account_field.clear()
@@ -32,7 +32,7 @@ class TestAppiumSetup(unittest.TestCase):
 
         # Nhập Mật khẩu
         password_field = self.appium_setup.find_element_by_accessibility_id("txtPassword")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(password_field, "Không tìm thấy phần tử bằng accessibility_id")
         password_field.click()  # Click vào trường "Tài khoản" để đảm bảo trường đóng được chọn
         # Xóa nội dung trường "Mật khẩu" trước khi nhập liệu mới
         password_field.clear()
@@ -41,56 +41,56 @@ class TestAppiumSetup(unittest.TestCase):
 
         # Click btn Đăng nhập
         login = self.appium_setup.find_element_by_accessibility_id("btnLogin")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(login, "Không tìm thấy phần tử bằng accessibility_id")
         login.click()
 
         # Click chọn Khoa
         department = self.appium_setup.find_element_by_accessibility_id("cboWards")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(department, "Không tìm thấy phần tử bằng accessibility_id")
         department.click()
         search_department = self.appium_setup.find_element_by_accessibility_id("teFind")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(search_department, "Không tìm thấy phần tử bằng accessibility_id")
         search_department.click()
         search_department.send_keys("Phòng điều dưỡng")
         chooser_search_department = self.appium_setup.find_element_by_name("gridColumn1 row0")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng name")
+        self.assertIsNotNone(chooser_search_department, "Không tìm thấy phần tử bằng name")
         chooser_search_department.click()
 
         # Click chọn Phòng
         room = self.appium_setup.find_element_by_accessibility_id("cboWardUnits")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(room, "Không tìm thấy phần tử bằng accessibility_id")
         room.click()
         search_room = self.appium_setup.find_element_by_accessibility_id("teFind")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(search_room, "Không tìm thấy phần tử bằng accessibility_id")
         search_room.click()
         search_room.send_keys("Tiếp nhận khu công")
         chooser_search_room = self.appium_setup.find_element_by_name("gridColumn2 row0")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng name")
+        self.assertIsNotNone(chooser_search_room, "Không tìm thấy phần tử bằng name")
         chooser_search_room.click()
 
         # Click btn Xác nhận
         confirmed = self.appium_setup.find_element_by_accessibility_id("btnLogin")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(confirmed, "Không tìm thấy phần tử bằng accessibility_id")
         confirmed.click()
 
         #Click chức năng Tiếp nhận
         visit_click = self.appium_setup.find_element_by_accessibility_id("btnVisit")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
+        self.assertIsNotNone(visit_click, "Không tìm thấy phần tử bằng accessibility_id")
         visit_click.click()
         # Đợi một khoảng thời gian ngắn để ứng dụng mở.
         time.sleep(5)
 
         #Mở màn hình tiếp nhận
         visit_menu = self.appium_setup.find_element_by_name("Tiếp nhận")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng name")
+        self.assertIsNotNone(visit_menu, "Không tìm thấy phần tử bằng name")
         visit_menu.click()
         visit_item = self.appium_setup.find_element_by_xpath("//Button[@Name='Tiếp nhận']")
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng xpath")
+        self.assertIsNotNone(visit_item, "Không tìm thấy phần tử bằng xpath")
         visit_item.click()
         # Đợi một khoảng thời gian ngắn để ứng dụng mở.
         time.sleep(5)
 
-    def test_visit_function(self):
+    def test_reception_function(self):
         #Đọc file data test
         file_path = 'datatest.xlsx'
         # Đọc dữ liệu từ file Excel và lưu vào một DataFrame pandas
@@ -150,11 +150,11 @@ class TestAppiumSetup(unittest.TestCase):
             patient_bod_datetime = pd.to_datetime(patient_bod_excel)
             # Tính toán tuổi của bệnh nhân
             today = datetime.datetime.today()
-            age = today.year - patient_bod_datetime.year - (
-                        (today.month, today.day) < (patient_bod_datetime.month, patient_bod_datetime.day))
+            age = today.year - patient_bod_datetime.year - ((today.month, today.day) < (patient_bod_datetime.month, patient_bod_datetime.day))
             # Kiểm tra xem tuổi của bệnh nhân có dưới 6 không
             if age < 6:
                 print("Tuổi của bệnh nhân bé hơn 6 tuổi. Cần có người thân.")
+                #Nhập mối quan hệ với bệnh nhân
                 patient_relative_field = self.appium_setup.find_element_by_accessibility_id("cboRelativeType")
                 patient_relative_field.click()
                 if patient_relative == "Cha":
@@ -197,14 +197,17 @@ class TestAppiumSetup(unittest.TestCase):
                     chooser_patient_relative = self.appium_setup.find_element_by_name("Row 13")
                     chooser_patient_relative.click()
 
+                #Nhập tên người thân
                 patient_relativeName_field = self.appium_setup.find_element_by_accessibility_id("txtRelativeName")
                 patient_relativeName_field.click()
                 patient_relativeName_field.send_keys(patient_relativeName)
 
+                #Nhập số điện thoại người thân
                 patient_relativePhone_field = self.appium_setup.find_element_by_accessibility_id("txtRelativePhone")
                 patient_relativePhone_field.click()
                 patient_relativePhone_field.send_keys("0" + str(patient_relativePhone))
 
+                #Nhập địa chỉ của người thân
                 patient_relativeAddress_field = self.appium_setup.find_element_by_accessibility_id("txtRelativeAddress")
                 patient_relativeAddress_field.click()
                 patient_relativeAddress_field.send_keys(patient_relativeAddress)
@@ -294,7 +297,7 @@ class TestAppiumSetup(unittest.TestCase):
             self.assertIsNotNone(chooser_search_benefit, "Không tìm thấy phần tử bằng name")
             chooser_search_benefit.click()
 
-            #Nếu quyền lợi là BHYT thì sẽ nhập thẻ BHYT, giá trị từ ngày đến ngày v nơi đăng ký
+            #Nếu quyền lợi là BHYT thì sẽ nhập thẻ BHYT, giá trị từ ngày đến ngày và nơi đăng ký
             if patient_benefit == "BHYT":
                 #Nhập thẻ BHYT
                 patient_bhyt_field = self.appium_setup.find_element_by_accessibility_id("txtInsCardNo")
@@ -316,14 +319,12 @@ class TestAppiumSetup(unittest.TestCase):
                 #Giá trị từ ngày
                 patient_from_field = self.appium_setup.find_element_by_accessibility_id("dpInsValidFrom")
                 patient_from_field.click()
-                # Chuyển đổi từ ngày sang định dạng mong muốn
                 formatted_from = pd.to_datetime(patient_from).strftime('%d%m%Y')
                 patient_from_field.send_keys(formatted_from)
 
                 #Giá trị đến ngày
                 patient_to_field = self.appium_setup.find_element_by_accessibility_id("dpInsValidTo")
                 patient_to_field.click()
-                # Chuyển đổi đến ngày sang định dạng mong muốn
                 formatted_to = pd.to_datetime(patient_to).strftime('%d%m%Y')
                 patient_to_field.send_keys(formatted_to)
 
@@ -360,7 +361,7 @@ class TestAppiumSetup(unittest.TestCase):
             self.assertIsNotNone(chooser_search_clinic, "Không tìm thấy phần tử bằng name")
             chooser_search_clinic.click()
 
-            if age < 6:
+            if age < 6 and (patient_clinic == "PK Tai Mũi Họng 1" or patient_clinic == "PK Tai Mũi Họng 2" or patient_clinic == "PK Răng Hàm Mặt"):
                 dialog = self.appium_setup.find_element_by_name("Thông báo")
                 dialog.click()
                 button_yes = self.appium_setup.find_element_by_accessibility_id("6")
@@ -382,7 +383,7 @@ class TestAppiumSetup(unittest.TestCase):
             confirm_button.click()
             time.sleep(5)
 
-            if age < 6:
+            if age < 6 and (patient_clinic == "PK Tai Mũi Họng 1" or patient_clinic == "PK Tai Mũi Họng 2" or patient_clinic == "PK Răng Hàm Mặt"):
                 dialog = self.appium_setup.find_element_by_name("Thông báo")
                 dialog.click()
                 button_yes = self.appium_setup.find_element_by_accessibility_id("6")
@@ -406,6 +407,114 @@ class TestAppiumSetup(unittest.TestCase):
             renew_button = self.appium_setup.find_element_by_accessibility_id("btnReNew")
             renew_button.click()
             time.sleep(5)
+
+    def test_update_information(self):
+        file_path = 'datatest.xlsx'
+        # Đọc dữ liệu từ file Excel và lưu vào một DataFrame pandas
+        df = pd.read_excel(file_path)
+        # Lặp qua từng hàng trong DataFrame và nhập dữ liệu vào trường văn bản trên giao diện người dùng
+        for index, row in df.iterrows():
+            patient_code = row['patient_code']
+            patient_email = row['patient_email']
+            patient_phone = row['patient_phone']
+            patient_blood = row['patient_blood']
+            patient_blood_type = row['patient_blood_type']
+            patient_cccd = row['patient_cccd']
+            patient_cccd_date = row['patient_cccd_date']
+            patient_cccd_place = row['patient_cccd_place']
+
+            # Lưu lại cửa sổ ban đầu
+            original_window_handle = self.appium_setup.get_driver().current_window_handle
+
+            #Nhập mã bệnh nhân cũ
+            patient_name_field = self.appium_setup.find_element_by_accessibility_id("txtFullName")
+            patient_name_field.click()
+            patient_name_field.send_keys("24009696")
+
+            pyautogui.press('enter')
+            time.sleep(10)
+
+            dialog = self.appium_setup.find_element_by_name("Thông báo")
+            dialog.click()
+            button_yes = self.appium_setup.find_element_by_accessibility_id("6")
+            button_yes.click()
+            time.sleep(5)
+
+            #Click btn "Mã bệnh nhân"
+            button_patient_code = self.appium_setup.find_element_by_accessibility_id("btnPatientCode")
+            button_patient_code.click()
+
+            # Lấy tất cả các handles của cửa sổ
+            all_windows = self.appium_setup.get_driver().window_handles
+            # Chuyển đến cửa sổ mới dựa trên mã cửa sổ
+            for window_handle in all_windows:
+                # Kiểm tra xem mã cửa sổ có tồn tại trong danh sách hay không
+                if window_handle != original_window_handle:
+                    # Chuyển đến cửa sổ mới
+                    self.appium_setup.get_driver().switch_to.window(window_handle)
+                    break
+            # Thực hiện các thao tác trên cửa sổ mới
+            #Nhập email
+            patient_email_field = self.appium_setup.find_element_by_accessibility_id("txtEmail")
+            patient_email_field.click()
+            patient_email_field.send_keys(patient_email)
+
+            #Nhập số điện thoại
+            patient_phone_field = self.appium_setup.find_element_by_accessibility_id("txtMobileNo")
+            patient_phone_field.click()
+            patient_phone_field.send_keys("0" + str(patient_phone))
+
+            #Nhập nhóm máu
+            patient_blood_field = self.appium_setup.find_element_by_accessibility_id("cboBloodTypeABO")
+            patient_blood_field.click()
+            if patient_blood == "A":
+                chooser_blood = self.appium_setup.find_element_by_name("Row 0")
+                chooser_blood.click()
+            elif patient_blood == "B":
+                chooser_blood = self.appium_setup.find_element_by_name("Row 1")
+                chooser_blood.click()
+            elif patient_blood == "AB":
+                chooser_blood = self.appium_setup.find_element_by_name("Row 2")
+                chooser_blood.click()
+            else:
+                chooser_blood = self.appium_setup.find_element_by_name("Row 3")
+                chooser_blood.click()
+
+            patient_blood_type_field = self.appium_setup.find_element_by_accessibility_id("cboBloodTypeRhd")
+            patient_blood_type_field.click()
+            if patient_blood_type == "Dương":
+                chooser_blood_type = self.appium_setup.find_element_by_name("Row 0")
+                chooser_blood_type.click()
+            else:
+                chooser_blood_type = self.appium_setup.find_element_by_name("Row 1")
+                chooser_blood_type.click()
+            #Nhập căn cước công dân
+            patient_cccd_field = self.appium_setup.find_element_by_accessibility_id("txtIdCardNo")
+            patient_cccd_field.click()
+            patient_cccd_field.send_keys("0" + str(patient_cccd))
+
+            #Nhập ngày cấp cccd
+            patient_cccd_date_field = self.appium_setup.find_element_by_accessibility_id("deIdCardIssueOn")
+            patient_cccd_date_field.click()
+            formatted_date = pd.to_datetime(patient_cccd_date).strftime('%d%m%Y')
+            patient_cccd_date_field.send_keys(formatted_date)
+
+            #Nhập nơi cấp cccd
+            patient_cccd_place_field = self.appium_setup.find_element_by_accessibility_id("txtIdCardIssueAt")
+            patient_cccd_place_field.click()
+            patient_cccd_place_field.send_keys(patient_cccd_place)
+
+            #Click btn Lưu
+            button_save = self.appium_setup.find_element_by_accessibility_id("btnSave")
+            button_save.click()
+
+            #Click btn Đóng
+            button_close = self.appium_setup.find_element_by_accessibility_id("btnClose")
+            button_close.click()
+            time.sleep(2)
+
+            # Quay lại cửa sổ ban đầu
+            self.appium_setup.get_driver().switch_to.window(original_window_handle)
 
 if __name__ == "__main__":
     unittest.main()
