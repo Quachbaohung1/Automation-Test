@@ -5,15 +5,10 @@ from init_driver import AppiumSetup
 import time
 import pandas as pd
 
-class TestAppiumSetup(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.appium_setup = AppiumSetup()
-        cls.appium_setup.start_appium_session()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.appium_setup.quit_appium_session()
+class function():
+    def __init__(self):
+        self.appium_setup = AppiumSetup()
 
     def calculate_age(self, patient_bod):
         # Chuyển đổi ngày tháng năm sinh từ định dạng chuỗi sang đối tượng datetime
@@ -23,15 +18,14 @@ class TestAppiumSetup(unittest.TestCase):
                 (today.month, today.day) < (patient_bod_datetime.month, patient_bod_datetime.day))
         return age
 
-    def test_login(self):
+    def login_with_parameters(self):
         # Tiếp tục làm việc với ứng dụng của bạn bằng cách sử dụng các lớp cửa sổ/phương thức tương ứng
+        time.sleep(3)
         element = self.appium_setup.find_element_by_accessibility_id("FrmMain")
         element.click()
-        self.assertIsNotNone(element, "Không tìm thấy phần tử bằng accessibility_id")
 
         # Nhập Tài khoản
         account_field = self.appium_setup.find_element_by_accessibility_id("txtAccName")
-        self.assertIsNotNone(account_field, "Không tìm thấy phần tử bằng accessibility_id")
         account_field.click()  # Click vào trường "Tài khoản" để đảm bảo trường đóng được chọn
         # Xóa nội dung trường "Tài khoản" trước khi nhập liệu mới
         account_field.clear()
@@ -40,7 +34,6 @@ class TestAppiumSetup(unittest.TestCase):
 
         # Nhập Mật khẩu
         password_field = self.appium_setup.find_element_by_accessibility_id("txtPassword")
-        self.assertIsNotNone(password_field, "Không tìm thấy phần tử bằng accessibility_id")
         password_field.click()  # Click vào trường "Tài khoản" để đảm bảo trường đóng được chọn
         # Xóa nội dung trường "Mật khẩu" trước khi nhập liệu mới
         password_field.clear()
@@ -49,9 +42,19 @@ class TestAppiumSetup(unittest.TestCase):
 
         # Click btn Đăng nhập
         login = self.appium_setup.find_element_by_accessibility_id("btnLogin")
-        self.assertIsNotNone(login, "Không tìm thấy phần tử bằng accessibility_id")
         login.click()
 
+class VisitTestSetup(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.appium_setup = AppiumSetup()
+        cls.appium_setup.start_appium_session()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.appium_setup.quit_appium_session()
+    def test_login(self):
+        function.login_with_parameters(self)
         # Click chọn Khoa
         department = self.appium_setup.find_element_by_accessibility_id("cboWards")
         self.assertIsNotNone(department, "Không tìm thấy phần tử bằng accessibility_id")
@@ -153,7 +156,7 @@ class TestAppiumSetup(unittest.TestCase):
             patient_bod_field.send_keys(formatted_bod)
 
             # Tính toán tuổi của bệnh nhân
-            age = TestAppiumSetup.calculate_age(self, patient_bod)
+            age = VisitTestSetup.calculate_age(self, patient_bod)
             # Kiểm tra xem tuổi của bệnh nhân có dưới 6 không
             if age < 6:
                 print("Tuổi của bệnh nhân bé hơn 6 tuổi. Cần có người thân.")
@@ -445,7 +448,7 @@ class TestAppiumSetup(unittest.TestCase):
             button_yes.click()
             time.sleep(5)
 
-            age = TestAppiumSetup.calculate_age(self, patient_bod)
+            age = VisitTestSetup.calculate_age(self, patient_bod)
             if age < 6:
                 dialog = self.appium_setup.find_element_by_name("Thông báo")
                 dialog.click()
