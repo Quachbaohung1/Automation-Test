@@ -6,7 +6,7 @@ import time
 import pandas as pd
 
 
-class function():
+class function_visit():
     def __init__(self):
         self.appium_setup = AppiumSetup()
 
@@ -49,12 +49,11 @@ class VisitTestSetup(unittest.TestCase):
     def setUpClass(cls):
         cls.appium_setup = AppiumSetup()
         cls.appium_setup.start_appium_session()
-
     @classmethod
     def tearDownClass(cls):
         cls.appium_setup.quit_appium_session()
     def test_login(self):
-        function.login_with_parameters(self)
+        function_visit.login_with_parameters(self)
         # Click chọn Khoa
         department = self.appium_setup.find_element_by_accessibility_id("cboWards")
         self.assertIsNotNone(department, "Không tìm thấy phần tử bằng accessibility_id")

@@ -2,8 +2,41 @@ import unittest
 import pandas as pd
 import pyautogui
 import time
-from Tiếp_nhận_Test import function
+from Tiếp_nhận_Test import function_visit
 from init_driver import AppiumSetup
+
+class function_examination():
+    def __init__(self):
+        self.appium_setup = AppiumSetup()
+    def patient_information(self, patient_code, patient_sysmtom):
+        # Hiển thị thông tin bệnh nhân
+        search_content = self.appium_setup.find_element_by_accessibility_id("txtSearchContent")
+        search_content.click()
+        search_content.send_keys(patient_code)
+        pyautogui.press('enter')
+        time.sleep(5)
+
+        # Nhập triệu chứng
+        patient_sysmtom_field = self.appium_setup.find_element_by_accessibility_id("txtSymptom")
+        patient_sysmtom_field.click()
+        patient_sysmtom_field.send_keys(patient_sysmtom)
+
+        # Nhập ICD sơ bộ
+
+        # Nhập ICD chính
+
+        # Nhập chẩn đoán
+
+        # Nhập ICD kèm theo
+
+        # Click btn Lưu
+
+    def prescription(self):
+
+    def perform_paraclinical(self):
+
+    def hospitalize(self):
+
 
 
 class ExaminationTestSetup(unittest.TestCase):
@@ -18,7 +51,7 @@ class ExaminationTestSetup(unittest.TestCase):
 
     def test_examination_checkin(self):
         # Tạo một instance
-        function.login_with_parameters(self)
+        function_visit.login_with_parameters(self)
         # Click chọn Khoa
         department = self.appium_setup.find_element_by_accessibility_id("cboWards")
         self.assertIsNotNone(department, "Không tìm thấy phần tử bằng accessibility_id")
@@ -73,17 +106,21 @@ class ExaminationTestSetup(unittest.TestCase):
         # Lặp qua từng hàng trong DataFrame và nhập dữ liệu vào trường văn bản trên giao diện người dùng
         for index, row in df.iterrows():
             patient_code = row['patient_code']
+            patient_sysmtom = row['patient_sysmtom']
 
             # Tiếp tục làm việc với ứng dụng bằng cách sử dụng các lớp cửa sổ/phương thức tương ứng
             element_visit = self.appium_setup.find_element_by_accessibility_id("pnMainPage")
             element_visit.click()
             self.assertIsNotNone(element_visit, "Không tìm thấy phần tử bằng accessibility_id")
 
-            search_content = self.appium_setup.find_element_by_accessibility_id("txtSearchContent")
-            search_content.click()
-            search_content.send_keys(patient_code)
-            pyautogui.press('enter')
-            time.sleep(5)
+            #Thông tin bệnh nhân
+            function_examination.patient_information(self, patient_code , patient_sysmtom)
+
+            #Chỉ định cận lâm sàng
+
+            #Kê toa thuốc
+
+
 
 
 
