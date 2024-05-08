@@ -1,6 +1,8 @@
 from appium import webdriver
 import subprocess
 import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class AppiumSetup:
     def __init__(self):
@@ -27,14 +29,13 @@ class AppiumSetup:
     def get_driver(self):
         return self.driver
 
-    def find_element_by_accessibility_id(self, accessibility_id):
-        return self.driver.find_element_by_accessibility_id(accessibility_id)
+    def find_element(self, by, value):
+        return self.driver.find_element(by, value)
 
-    def find_element_by_name(self, name):
-        return self.driver.find_element_by_name(name)
-
-    def find_element_by_xpath(self, xpath):
-        return self.driver.find_element_by_xpath(xpath)
+    def wait_for_element(self, by, value, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(
+            EC.presence_of_element_located((by, value))
+        )
 
     def quit_appium_session(self):
         if self.driver:

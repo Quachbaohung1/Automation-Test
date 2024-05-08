@@ -1,0 +1,37 @@
+=== Test Report ===
+Total tests run: 5
+Successes: 3
+Failures: 0
+Errors: 2
+Skipped: 0
+
+=== Successes ===
+test_case_10 (__main__.VisitTestSetup.test_case_10): Passed
+test_case_11 (__main__.VisitTestSetup.test_case_11): Passed
+test_case_7 (__main__.VisitTestSetup.test_case_7): Passed
+
+=== Errors ===
+test_case_8 (__main__.VisitTestSetup.test_case_8): Traceback (most recent call last):
+  File "D:\HIS automation\TestCase\Tiếp_nhận.py", line 97, in test_case_8
+    function_visit.update_information(self, TC_ID = "TC_7")
+  File "D:\HIS automation\Phân_hệ\Tiếp_nhận_Test.py", line 449, in update_information
+    patient_name_field.send_keys(patient_code)
+  File "C:\Users\Thanh Truc\AppData\Local\Programs\Python\Python311\Lib\site-packages\appium\webdriver\webelement.py", line 217, in send_keys
+    keys = keys_to_typing(value)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Thanh Truc\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\common\utils.py", line 150, in keys_to_typing
+    for i in range(len(val)):
+                   ^^^^^^^^
+TypeError: object of type 'float' has no len()
+
+test_case_9 (__main__.VisitTestSetup.test_case_9): Traceback (most recent call last):
+  File "D:\HIS automation\TestCase\Tiếp_nhận.py", line 105, in test_case_9
+    function_visit.click_perform_preclinical(self)
+  File "D:\HIS automation\Phân_hệ\Tiếp_nhận_Test.py", line 390, in click_perform_preclinical
+    perform_preclinical_screen = WebDriverWait(self.appium_setup, 10).until(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Thanh Truc\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\support\wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
