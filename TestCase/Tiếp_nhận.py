@@ -132,7 +132,7 @@ class VisitTestSetup(unittest.TestCase):
         successes = custom_result.testsRun - len(custom_result.failures) - len(custom_result.errors)
 
         # Ghi kết quả vào file
-        with open("D:/HIS automation/Result/TestResult.txt", "w", encoding="utf-8") as file:
+        with open("D:/HIS automation/Result/TestResult_TiếpNhận.txt", "w", encoding="utf-8") as file:
             file.write("=== Test Report ===\n")
             file.write(f"Total tests run: {custom_result.testsRun}\n")
             file.write(f"Successes: {successes}\n")

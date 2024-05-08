@@ -1,0 +1,9 @@
+=== Test Report ===
+Total tests run: 1
+Successes: 1
+Failures: 0
+Errors: 0
+Skipped: 0
+
+=== Successes ===
+test_case_1 (__main__.VisitTestSetup.test_case_1): Passed
